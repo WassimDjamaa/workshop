@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Vue.js</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+
+    <body>
+        <div id="app">
+            <h1>{{ title }}</h1>
+            <input type="text" v-model="message" />
+            <button @click="ajouterNote">Ajouter</button>
+
+            <div v-for="todo in todos">
+                <h2 v-bind:title="message">
+                    - {{ todo }}
+                    <button @click="deleteTodo(todo)">X</button>
+                </h2>
+            </div>
+        
+            <button @click="reverseMessage">Inverser la todoList</button>
+        </div>
+
+        <script>
+            const app = new Vue({
+                el: '#app',
+                data: {
+                    title: 'Hello Vue!',
+                    message: '',
+                    todos: []
+                },
+
+                methods: {
+                    reverseMessage(){
+                        this.todos.reverse();
+                    },
+
+                    ajouterNote(){
+                        this.todos.push(this.message);
+                        this.message = "";
+                    },
+
+                    deleteTodo(index) {
+                        this.todos.splice(index, 1);
+                    },
+                }
+            })
+        </script>
+    </body>
+</html>
