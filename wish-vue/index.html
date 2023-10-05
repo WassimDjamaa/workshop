@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <title>Vue Project</title>
+    <title>Wish</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -45,8 +45,56 @@
       </nav>
 
       <router-view></router-view>
-
     </div>
+
+    <script type="text/x-template" id="home">
+     <div class="home-container">
+        <h1>Articles</h1>
+
+        <!-- search display -->
+        <div class="search-display-container">
+          <div class="search-display">
+          </div>
+        </div>
+
+        <!-- cards display -->
+        <div class="card-cart-container">
+          <div class="card-container">
+            <div class="card" v-for="product in products" :key="product.id">
+
+              <div class="img-container">
+                <img :src="product.img" />
+              </div>
+
+              <div class="card-text">
+                  <h3>{{ product.description }}</h3>
+                  <span>{{ product.price }}€</span>
+              </div>
+
+              <div class="card-icons">
+                <div class="like-container">
+                  <input 
+                    type="checkbox" 
+                    name="checkbox" 
+                    v-bind:id="product.id"
+                  />
+                  <label v-bind:for="product.id">
+                    <i class="fas fa-heart"></i>
+                  </label>
+                </div>
+
+                <div class="add-to-cart">
+                  <button>
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                </div>
+              </div>
+          
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
 
       <!-- VueJS -->
       <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
