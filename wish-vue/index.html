@@ -80,21 +80,20 @@
 
               <div class="card-icons">
                 <div class="like-container">
-                  <input 
-                    type="checkbox" 
-                    name="checkbox" 
+                  <input
+                    type="checkbox"
+                    :value=product.id
+                    name="checkbox"
                     v-bind:id="product.id"
-                    :value="product.id"
                     v-model="liked"
                     @click="setLikeCookie()"
                   />
-                  <label :for="product.id">
+                  <label v-bind:for="product.id">
                     <i class="fas fa-heart"></i>
                   </label>
                 </div>
-
                 <div class="add-to-cart">
-                  <button>
+                  <button @click="addToCart(product)">
                     <i class="fas fa-shopping-cart"></i>
                   </button>
                 </div>
@@ -104,6 +103,23 @@
 
           <div v-if="filteredList.length == []" class="no-result">
             <h2>Aucun résultat</h2>
+          </div>
+        </div>
+
+        <!--  cart display -->
+        <div v-if="cart.length > 0" class="shopping-cart" id="shopping-cart">
+          <h2>Mon panier</h2>
+
+          <div v-for="product in cart" class="item">
+            <div class="item-img">
+              <img :src="product.img" alt="" />
+            </div>
+
+            <div class="item-text">
+              <h3>{{ product.description }}</h3>
+              <span>{{ product.price }}€</span>
+            </div>
+
           </div>
         </div>
       </div>
