@@ -49,11 +49,12 @@ const home = {
 
         addToCart(product){
             // check if already in array
-            for (let i = 0; i < this.cart.length; i++){
-              if (this.cart[i].id === product.id) {
-                return this.cart[i].quantity++
-              }
+            for (const elementProduct of this.cart) {  // for of loop
+                if (elementProduct.id === product.id) {
+                    return elementProduct.quantity++;
+                }
             }
+
             this.cart.push({
               id: product.id,
               img: product.img,
