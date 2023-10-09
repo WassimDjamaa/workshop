@@ -55,7 +55,7 @@
         <!-- search display -->
         <input v-model="searchKey" id="search" type="search" placeholder="Rechercher..." autocomplete="off">
         <span v-if="searchKey && filteredList.length >= 1 ">
-          {{filteredList.length}} resultat<span v-if="filteredList.length >= 2">s</span>
+          {{filteredList.length}} résultat<span v-if="filteredList.length >= 2">s</span>
         </span>
 
         <!-- cards display -->
@@ -137,6 +137,7 @@
                   <h2>Total :</h2>
                   <h2>{{ cartTotalAmount() }}€</h2>
                 </div>
+                <h6>Total articles : {{ cartTotalQuantity() }}</h6>
               </div>
             </div>
           </transition>

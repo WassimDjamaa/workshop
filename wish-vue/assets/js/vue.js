@@ -88,7 +88,15 @@ const home = {
                 total = total + (item.quantity * item.price);
             }
             return total;
-        }
+        },
+
+        cartTotalQuantity(){
+            let total = 0;
+            for (const item of this.cart) {
+                total = total + item.quantity;
+            }
+            return total;
+        },
     },
     mounted: () => {
         this.getLikeCookie;
