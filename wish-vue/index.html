@@ -111,6 +111,24 @@
                     <h4>{{ product.description }}</h4>
                     <p>{{ product.price }}€</p>
                   </div>
+
+                  <div class="item-quantity">
+                    <h6>Quantité : {{ product.quantity }}</h6>
+
+                    <div class="cart-icons">
+                      <button>
+                        <i class="fa fa-plus" @click="cartPlusOn(product)"></i>
+                      </button>
+
+                      <button>
+                        <i class="fa fa-minus" @click="cartMinusOn(product, id)"></i>
+                      </button>
+
+                      <button>
+                        <i class="fa fa-trash" @click="deleteCartById(id)"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </transition-group>
             </div>

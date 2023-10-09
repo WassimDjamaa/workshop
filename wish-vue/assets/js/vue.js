@@ -62,7 +62,23 @@ const home = {
               price: product.price,
               quantity: 1
             })
-          },
+        },
+
+        cartPlusOn(product){
+            product.quantity += 1;
+        },
+
+        cartMinusOn(product, id){
+            if (product.quantity == 1) {
+                this.deleteCartById(id);
+            } else {
+                product.quantity -= 1;
+            }
+        },
+
+        deleteCartById(id){
+            this.$delete(this.cart, id);
+        }
     },
     mounted: () => {
         this.getLikeCookie;
