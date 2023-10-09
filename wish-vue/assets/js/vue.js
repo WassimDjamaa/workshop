@@ -49,6 +49,8 @@ const home = {
 
         addToCart(product){
             // check if already in array
+            const { id, img, description, price } = product;
+
             for (const elementProduct of this.cart) {  // for of loop
                 if (elementProduct.id === product.id) {
                     return elementProduct.quantity++;
@@ -56,10 +58,10 @@ const home = {
             }
 
             this.cart.push({
-              id: product.id,
-              img: product.img,
-              description: product.description,
-              price: product.price,
+              id,
+              img,
+              description,
+              price,
               quantity: 1
             })
         },
@@ -78,6 +80,14 @@ const home = {
 
         deleteCartById(id){
             this.$delete(this.cart, id);
+        },
+
+        cartTotalAmount(){
+            let total = 0;
+            for (const item of this.cart) {
+                total = total + (item.quantity * item.price);
+            }
+            return total;
         }
     },
     mounted: () => {
