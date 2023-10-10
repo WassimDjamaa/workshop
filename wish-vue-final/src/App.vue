@@ -1,23 +1,44 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-</script>
-
 <template>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"/>
   <header>
-    <img alt="Vue log" src="./assets/img/wish-logo-800.png" width="130" height="50" />
-
-    <div class="wrapper">
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/user-settings">User Settings</RouterLink>
-        <RouterLink to="/wish-list">Wish List</RouterLink>
-        <RouterLink to="/shopping-cart">shopping-cart</RouterLink>
+        <div class="nav-container">
+          <div id="logo">
+            <RouterLink to="/">
+              <img alt="Wish" src="./assets/img/wish-logo-800.png" />
+            </RouterLink>
+          </div>
+
+            <ul id="icons">
+              <li>
+                <RouterLink to="/user-settings">
+                  <i class="fas fa-user"></i>
+                </RouterLink>
+              </li>
+
+              <li>
+                <RouterLink to="/wish-list">
+                  <i class="fas fa-heart"></i>
+                </RouterLink>
+              </li>
+
+              <li>
+                <RouterLink to="/shopping-cart">
+                  <i class="fas fa-shopping-cart"></i>
+                </RouterLink>
+              </li>
+            </ul>
+          </div>
       </nav>
-    </div>
   </header>
 
   <RouterView />
 </template>
+
+<script setup>
+  import { RouterLink, RouterView } from 'vue-router'
+  import './assets/style/style.css'
+</script>
 
 <style scoped>
 
