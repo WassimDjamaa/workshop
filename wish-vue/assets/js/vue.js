@@ -34,8 +34,8 @@ const home = {
         },
 
         getLikeCookie(){
-        let cookieValue = JSON.parse($cookies.get('like'));
-        cookieValue == null ? this.liked = [] : this.liked = cookieValue
+            let cookieValue = JSON.parse($cookies.get('like'));
+            cookieValue == null ? this.liked = [] : this.liked = cookieValue
         },
     },
     methods: {
