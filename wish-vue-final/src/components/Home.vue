@@ -18,7 +18,7 @@
               <img v-bind:src="`../src/assets/img/${product.img}`" alt="product">
             </div>
             
-            <div class="product-details">
+            <div class="card-text">
               <h2>{{ product.description }}</h2>
               <p>Prix: {{ product.price }}€</p>
             </div>
@@ -30,6 +30,8 @@
                     :value=product.id
                     name="checkbox"
                     v-bind:id="product.id"
+                    v-model="liked"
+                    @click="setLikeCookie()"
                   />
                   <label v-bind:for="product.id">
                     <i class="fas fa-heart"></i>
@@ -54,34 +56,44 @@
 </template>
   
 <script>
+  import productData from '../assets/data/products.json'
+
   export default {
     name: 'Home',
     data() {
       return {
-        products: [
-          { id: 1, description: 'Quarz Luxe', price: 12, img: 'quarz-luxe.JPG' },
-          { id: 2, description: 'Curren Business', price: 20, img: 'curren-business.JPG' },
-          { id: 3, description: 'Curren Sport', price: 5, img: 'curren-sport.JPG' },
-          { id: 4, description: 'Jaragar Racing', price: 8, img: 'jaragar-racing.JPG' },
-          { id: 5, description: 'Liges Hommes', price: 3, img: 'liges-hommes.JPG' },
-          { id: 6, description: 'Maserati Mechanical', price: 65, img: 'maserati-mechanical.JPG' },
-          { id: 7, description: 'Montre Mecanique', price: 25, img: 'montre-mecanique.JPG' },
-          { id: 8, description: 'Brand Designer', price: 28, img: 'brand-designer.JPG' },
-          { id: 9, description: 'Relogio Masculino', price: 4, img: 'relogio-masculino.JPG' },
-          { id: 10, description: 'Tissot Multifunction', price: 29, img: 'tissot-multifunction.JPG' },
-          { id: 11, description: 'Hip Hop Gold', price: 87, img: 'hiphop-gold.JPG' },
-          { id: 12, description: 'Mesh Genova', price: 6, img: 'mesh-genova.JPG' },
-        ],
+        products: productData,
         searchKey: '',
+        liked: [],
       };
     },
+
     computed: {
       filteredList() {
         return this.products.filter((product) => {
           return product.description.toLowerCase().includes(this.searchKey.toLowerCase());
         });
       },
+
+      getLikeCookie(){
+          let cookieValue = JSON.parse(this.$cookies.get('like'));
+          cookieValue == null ? this.liked = [] : this.liked = cookieValue
+        },
     },
+
+    methods: {
+      setLikeCookie(){
+        document.addEventListener('input', () => {
+          setTimeout(() => {
+           this.$cookies.set('like', JSON.stringify(this.liked));
+          }, 300);
+        })
+      },
+    },
+
+    mounted(){
+      this.getLikeCookie;
+    }
   };
 </script>
   
