@@ -1,4 +1,15 @@
-villes = ["Paris", "Madrid", "Alger", "Tunis", "Rome", "Londre", "Berlin", "New York", "Tokyo", "Pekin"]
+villes = [
+    "Paris",
+    "Madrid",
+    "Alger",
+    "Tunis",
+    "Rome",
+    "Londre",
+    "Berlin",
+    "New York",
+    "Tokyo",
+    "Pekin",
+]
 
 villeEnter = input("Entrez une ville: ")
 
@@ -7,4 +18,3 @@ if villeEnter in villes:
 else:
     villes.append(villeEnter)
     print(villes)
-
