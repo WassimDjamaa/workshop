@@ -1,6 +1,10 @@
-lastname = input("Quelle est ton nom ? ")
-firstname = input("Quelle est ton prenom ? ")
+villes = ["Paris", "Madrid", "Alger", "Tunis", "Rome", "Londre", "Berlin", "New York", "Tokyo", "Pekin"]
 
-name_complet = firstname + " " + lastname 
+villeEnter = input("Entrez une ville: ")
 
-print(f"Bonjour je m'appelle {name_complet} et je code pour la 1ere fois en python")
+if villeEnter in villes:
+    print(f"{villeEnter} existe deja ...")
+else:
+    villes.append(villeEnter)
+    print(villes)
+
