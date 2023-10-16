@@ -5,9 +5,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sass" : "sass --watch ./assets/style/main.scss:./assets/style/style.css"
   },
   "dependencies": {
+    "sass": "^1.69.3",
     "vue": "^3.3.4",
     "vue-cookies": "^1.8.3",
     "vue-router": "^4.2.4"
