@@ -8,42 +8,41 @@
       {{ filteredList.length }} résultat<span v-if="filteredList.length >= 2">s</span>
     </span>
 
-      <!-- cards display -->
-      <div class="card-cart-container">
-        <div class="card-container">
-          <div class="card" v-for="product in filteredList">
+    <!-- cards display -->
+    <div class="card-cart-container">
+      <div class="card-container">
+        <div class="card" v-for="product in filteredList">
 
-            <div class="img-container">
-              <img v-bind:src="`../src/assets/img/${product.img}`" />
-            </div>
-
-            <div class="card-icons">
-              <div class="like-container">
-                <input
-                  type="checkbox"
-                  :value=product.id
-                  name="checkbox"
-                  v-bind:id="product.id"
-                  v-model="liked"
-                  @click="setLikeCookie()"
-                />
-                <label v-bind:for="product.id">
-                  <i class="fas fa-heart"></i>
-                </label>
-              </div>
-              <div class="add-to-cart">
-                <button v-on:click="addToCart(product)">
-                  <i class="fas fa-shopping-cart"></i>
-                </button>
-              </div>
-            </div>
+          <div class="img-container">
+            <img v-bind:src="`../src/assets/img/${product.img}`" />
           </div>
 
-          <!-- no result message -->
-          <div v-if="filteredList.length == []" class="no-result">
-            <p>Aucun résultat</p>
+          <div class="item-description">
+            <h4>{{ product.description }}</h4>
+            <p>Prix : {{ product.price }}€</p>
+          </div>
+
+          <div class="card-icons">
+            <div class="like-container">
+              <input type="checkbox" :value=product.id name="checkbox" v-bind:id="product.id" v-model="liked"
+                @click="setLikeCookie()" />
+              <label v-bind:for="product.id">
+                <i class="fas fa-heart"></i>
+              </label>
+            </div>
+            <div class="add-to-cart">
+              <button v-on:click="addToCart(product)">
+                <i class="fas fa-shopping-cart"></i>
+              </button>
+            </div>
           </div>
         </div>
+
+        <!-- no result message -->
+        <div v-if="filteredList.length == []" class="no-result">
+          <p>Aucun résultat</p>
+        </div>
+      </div>
 
       <!-- cart display -->
       <transition name="cart-anim">
@@ -62,8 +61,8 @@
                 <p>{{ product.price }}€</p>
               </div>
 
-            <div class="item-quantity">
-              <h6>Quantité : {{ product.quantity }}</h6>
+              <div class="item-quantity">
+                <h6>Quantité : {{ product.quantity }}</h6>
                 <div class="cart-icons">
                   <button @click="cartPlusOn(product)">
                     <i class="fa fa-plus"></i>
@@ -86,7 +85,7 @@
               <h2>Total :</h2>
               <h2>{{ cartTotalAmount() }}€</h2>
             </div>
-              <h6>Total articles : {{ cartTotalQuantity() }}</h6>
+            <h6>Total articles : {{ cartTotalQuantity() }}</h6>
           </div>
         </div>
       </transition>
@@ -95,94 +94,93 @@
 </template>
   
 <script>
-  import productData from '../assets/data/products.json'
+import productData from '../assets/data/products.json'
 
-  export default {
-    name: 'Home',
-    data() {
-      return {
-        products: productData,
-        searchKey: '',
-        liked: [],
-        cart: []
-      };
+export default {
+  name: 'Home',
+  data() {
+    return {
+      products: productData,
+      searchKey: '',
+      liked: [],
+      cart: []
+    };
+  },
+
+  computed: {
+    filteredList() {
+      return this.products.filter((product) => {
+        return product.description.toLowerCase().includes(this.searchKey.toLowerCase());
+      });
     },
 
-    computed: {
-      filteredList() {
-        return this.products.filter((product) => {
-          return product.description.toLowerCase().includes(this.searchKey.toLowerCase());
-        });
-      },
+    getLikeCookie() {
+      let cookieValue = JSON.parse(this.$cookies.get('like'));
+      cookieValue == null ? this.liked = [] : this.liked = cookieValue
+    },
+  },
 
-      getLikeCookie(){
-          let cookieValue = JSON.parse(this.$cookies.get('like'));
-          cookieValue == null ? this.liked = [] : this.liked = cookieValue
-      },
+  methods: {
+    setLikeCookie() {
+      document.addEventListener('input', () => {
+        setTimeout(() => {
+          this.$cookies.set('like', JSON.stringify(this.liked));
+        }, 300);
+      })
     },
 
-    methods: {
-      setLikeCookie(){
-        document.addEventListener('input', () => {
-          setTimeout(() => {
-            this.$cookies.set('like', JSON.stringify(this.liked));
-          }, 300);
-        })
-      },
+    addToCart(product) {
+      // check if already in array
+      const { id, img, description, price } = product;
 
-      addToCart(product) {
-        // check if already in array
-        const { id, img, description, price } = product;
-
-        for (const elementProduct of this.cart) {
-          if (elementProduct.id === id) {
-            return elementProduct.quantity++; 
-          }
+      for (const elementProduct of this.cart) {
+        if (elementProduct.id === id) {
+          return elementProduct.quantity++;
         }
+      }
 
-        this.cart.push({
-          id,
-          img,
-          description,
-          price,
-          quantity: 1
-        })
-      },
-
-      cartPlusOn(product){
-        product.quantity += 1
-      },
-
-      cartMinusOn(product, id){
-        (product.quantity == 1 ? this.deleteCartById(id) : product.quantity -= 1)
-      },
-
-      deleteCartById(id){
-        this.cart = this.cart.filter((product) => product.id !== id);
-      },
-
-      cartTotalAmount(){
-        let total = 0;
-        for (const item of this.cart) {
-            total = total + (item.quantity * item.price);
-        }
-        return total;
-      },
-
-      cartTotalQuantity(){
-        let total = 0;
-        for (const item of this.cart) {
-            total = total + item.quantity;
-        }
-        return total;
-      },
+      this.cart.push({
+        id,
+        img,
+        description,
+        price,
+        quantity: 1
+      })
     },
 
-    mounted(){
-      this.getLikeCookie;
-    }
-  };
+    cartPlusOn(product) {
+      product.quantity += 1
+    },
+
+    cartMinusOn(product, id) {
+      (product.quantity == 1 ? this.deleteCartById(id) : product.quantity -= 1)
+    },
+
+    deleteCartById(id) {
+      this.cart = this.cart.filter((product) => product.id !== id);
+    },
+
+    cartTotalAmount() {
+      let total = 0;
+      for (const item of this.cart) {
+        total = total + (item.quantity * item.price);
+      }
+      return total;
+    },
+
+    cartTotalQuantity() {
+      let total = 0;
+      for (const item of this.cart) {
+        total = total + item.quantity;
+      }
+      return total;
+    },
+  },
+
+  mounted() {
+    this.getLikeCookie;
+  }
+};
 </script>
   
-<style scoped>
-</style>
+<style scoped></style>
