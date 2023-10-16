@@ -66,15 +66,15 @@
                   <h6>Quantité : {{ product.quantity }}</h6>
 
                   <div class="cart-icons">
-                    <button>
+                    <button @click="cartPlusOn(product)">
                       <i class="fa fa-plus"></i>
                     </button>
 
-                    <button>
+                    <button @click="cartMinusOn(product, product.id)">
                       <i class="fa fa-minus"></i>
                     </button>
 
-                    <button>
+                    <button @click="deleteCartById(product.id)">
                       <i class="fa fa-trash"></i>
                     </button>
                   </div>
@@ -140,8 +140,24 @@
           price,
           quantity: 1
         })
-      
       },
+
+      cartPlusOn(product){
+        product.quantity += 1
+      },
+
+      cartMinusOn(product, id){
+            if (product.quantity == 1) {
+                this.deleteCartById(id);
+            } else {
+                product.quantity -= 1;
+            }
+        },
+
+        deleteCartById(id){
+          this.cart = this.cart.filter((product) => product.id !== id);
+        },
+
     },
 
     mounted(){
