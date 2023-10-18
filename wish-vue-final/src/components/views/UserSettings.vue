@@ -1,9 +1,9 @@
 <template>
     <div>
-        <h1>User settings</h1>
+        <h1>Paramètres utilisateurs</h1>
 
         <p>
-            Cette page est en cours de construction.
+            Cette page est en cours de développement.
         </p>
     </div>
 </template>

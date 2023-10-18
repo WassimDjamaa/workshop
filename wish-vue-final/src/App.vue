@@ -27,6 +27,12 @@
                 <i class="fas fa-shopping-cart"></i>
               </RouterLink>
             </li>
+
+            <li>
+              <RouterLink to="/login">
+                <i class="fas fa-sign-in-alt"></i>
+              </RouterLink>
+            </li>
           </ul>
         </div>
     </nav>

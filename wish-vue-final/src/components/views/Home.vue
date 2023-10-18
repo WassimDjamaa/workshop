@@ -100,7 +100,7 @@
 </template>
   
 <script>
-import productData from '../assets/data/products.json'
+import productData from '../../assets/data/products.json'
 
 export default {
   name: 'Home',

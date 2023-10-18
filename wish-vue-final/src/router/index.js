@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // Components
-import Home from '../components/Home.vue'
-import userSettings from '../components/userSettings.vue'
-import wishList from '../components/wishList.vue'
-import shoppingCart from '../components/shoppingCart.vue'
+import home from '../components/views/Home.vue'
+import userSettings from '../components/views/UserSettings.vue'
+import wishList from '../components/views/WishList.vue'
+import shoppingCart from '../components/views/ShoppingCart.vue'
+import login from '../components/login/Login.vue'
+import register from '../components/login/Register.vue'
 
 // Create a new router
 const router = createRouter({
@@ -13,24 +15,34 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: home,
     },
     { 
-      path: '/user-settings', 
-      component: userSettings, 
-      name: 'userSettings' 
+      path: '/user-settings',
+      name: 'userSettings',
+      component: userSettings
     },
     { 
       path: '/wish-list', 
-      component: wishList, 
-      name: 'wishList' 
+      name: 'wishList',
+      component: wishList
     },
     { 
       path: '/shopping-cart', 
-      component: shoppingCart, 
-      name: 'shoppingCart' 
+      name: 'shoppingCart',
+      component: shoppingCart
     },
+    { 
+      path: '/login', 
+      name: 'login',
+      component: login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: register
+    }
   ]
-})
+});
 
 export default router
