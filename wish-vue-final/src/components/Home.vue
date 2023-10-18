@@ -87,6 +87,12 @@
             </div>
             <h6>Total articles : {{ cartTotalQuantity() }}</h6>
           </div>
+
+          <div class="cart-buttons">
+            <button class="clear-cart" @click="cart = []">
+              Vider le panier
+            </button>
+          </div>
         </div>
       </transition>
     </div>

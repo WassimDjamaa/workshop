@@ -469,6 +469,33 @@ nav {
       transition: .7s;
     }
   }
+
+  .cart-buttons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0 0.4rem;
+
+    button {
+      background: white;
+      padding: 0.8rem;
+      border-radius: 4px;
+      box-shadow: 0 1px 6px rgba(51, 51, 51, 0.2);
+      transition: all 0.2s ease;
+      letter-spacing: 1px;
+
+      &:hover {
+        background: black;
+        color: #2eb7eb;
+        font-weight: bold;
+        letter-spacing: 2.5px;
+        animation: scaler 1.5s infinite linear;
+      }
+      &:active {
+        transform: scale(0.92);
+      }
+    }
+  }
 }
 @keyframes scaler {
   50% {
