@@ -5,8 +5,8 @@ import home from '../components/views/Home.vue'
 import userSettings from '../components/views/UserSettings.vue'
 import wishList from '../components/views/WishList.vue'
 import shoppingCart from '../components/views/ShoppingCart.vue'
-import login from '../components/login/Login.vue'
-import register from '../components/login/Register.vue'
+import login from '../components/auth/Login.vue'
+import register from '../components/auth/Register.vue'
 
 // Create a new router
 const router = createRouter({

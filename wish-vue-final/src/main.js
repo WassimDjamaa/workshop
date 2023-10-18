@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import VueCookies from 'vue-cookies';
-import Authorization from './components/login/Authorization.vue'
+import Authorization from './components/auth/Authorization.vue'
 
 const app = createApp(App)
 
