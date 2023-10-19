@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Inscription</h1>
-
+        
         <form @submit.prevent="submit">
             <div>
                 <label for="email">Email</label>
@@ -19,50 +19,44 @@
             </div>
 
             <button type="submit">S'inscrire</button>
-        </form>
 
-        <p>
-            Déjà un compte ? <RouterLink to="/login">Se connecter</RouterLink>
-        </p>
+            <p>
+                Déjà un compte ? <RouterLink to="/login">Se connecter</RouterLink>
+            </p>
+        </form>
     </div>
+        
 </template>
 
 <script>
-    import { ref } from 'vue';
-    import { useRouter } from 'vue-router';
+    import axios from "axios";
+    export default {
+        data() {
+            return {
+                email: "",
+                password: "",
+                conf_password: "",
+            };
+        },
+        methods: {
+            submit() {
+                let data = {
+                    email: this.email,
+                    password: this.password,
+                    conf_password: this.conf_password,
+                };
 
-    const email = ref('');
-    const password = ref('');
-    const conf_password = ref('');
-
-    const router = useRouter();
-
-    const register = async () => {
-        if (!email.value || !password.value || !conf_password.value) {
-            alert('Veuillez remplir tous les champs');
-            return;
-        }
-
-        if (password.value !== conf_password.value) {
-            alert('Les mots de passe ne correspondent pas');
-            return;
-        }
-
-        const response = await fetch('http://localhost:3000/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
+                axios
+                    .post("http://localhost:5000/register", data)
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+                console.log(this.email, this.password, this.conf_password);
             },
-            body: JSON.stringify({ email, password })
-        }).then((res) => res.json());
-
-        if (response.success) {
-            localStorage.setItem('token', response.token);
-            router.push('/');
-        } else {
-            alert(response.message);
-        }
-    }
-
+        },
+    };
 
 </script>
