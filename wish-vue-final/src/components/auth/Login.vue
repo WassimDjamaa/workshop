@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1>Authentification</h1>
-
+        <h1>Connexion</h1>
+        
         <form @submit.prevent="submit">
             <div>
                 <label for="email">Email</label>
@@ -14,19 +14,45 @@
             </div>
 
             <button type="submit">Se connecter</button>
-        </form>
 
-        <p>
-            Pas encore de compte ? <RouterLink to="/register">Créer un compte</RouterLink>
-        </p>
+            <p>
+                Pas encore de compte ? <RouterLink to="/register">S'inscrire</RouterLink>
+            </p>
+        </form>
     </div>
 </template>
   
 <script>
-    import { ref } from 'vue';
+    import axios from "axios";
+    export default {$,
+        name: "Login",
+        data() {
+            return {
+                email: "",
+                password: "",
+            };
+        },
+        methods: {
+            submit() {
+                let data = {
+                    email: this.email,
+                    password: this.password,
+                };
 
-    const email = ref('');
-    const password = ref('');
+                const { email, password } = data;
+
+                axios
+                    .post("http://localhost:5000/login", data)
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+                    console.log(email, password);
+            },
+        },
+    };
 
 </script>
 

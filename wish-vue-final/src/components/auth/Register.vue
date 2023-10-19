@@ -31,6 +31,7 @@
 <script>
     import axios from "axios";
     export default {
+        name: "Register",
         data() {
             return {
                 email: "",
@@ -46,6 +47,8 @@
                     conf_password: this.conf_password,
                 };
 
+                const { email, password, conf_password } = data;
+
                 axios
                     .post("http://localhost:5000/register", data)
                     .then((response) => {
@@ -54,7 +57,7 @@
                     .catch((error) => {
                         console.log(error);
                     });
-                console.log(this.email, this.password, this.conf_password);
+                console.log(email, password, conf_password);
             },
         },
     };
