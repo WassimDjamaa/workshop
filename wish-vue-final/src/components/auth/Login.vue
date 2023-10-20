@@ -24,7 +24,7 @@
   
 <script>
     import axios from "axios";
-    export default {$,
+    export default {
         name: "Login",
         data() {
             return {
