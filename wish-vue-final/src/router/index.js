@@ -6,7 +6,7 @@ import userSettings from '../components/views/UserSettings.vue'
 import wishList from '../components/views/WishList.vue'
 import shoppingCart from '../components/views/ShoppingCart.vue'
 import login from '../components/auth/Login.vue'
-import register from '../components/auth/Register.vue'
+import signup from '../components/auth/Signup.vue'
 
 // Create a new router
 const router = createRouter({
@@ -38,9 +38,9 @@ const router = createRouter({
       component: login
     },
     {
-      path: '/register',
-      name: 'register',
-      component: register
+      path: '/signup',
+      name: 'signup',
+      component: signup
     }
   ]
 });

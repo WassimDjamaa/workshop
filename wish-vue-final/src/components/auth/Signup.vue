@@ -20,6 +20,8 @@
 
             <button type="submit">S'inscrire</button>
 
+            {{ errors  }}
+
             <p>
                 Déjà un compte ? <RouterLink to="/login">Se connecter</RouterLink>
             </p>
@@ -31,12 +33,14 @@
 <script>
     import axios from "axios";
     export default {
-        name: "Register",
+        name: "Signup",
         data() {
             return {
                 email: "",
                 password: "",
                 conf_password: "",
+
+                errors: '',
             };
         },
         methods: {
@@ -50,14 +54,15 @@
                 const { email, password, conf_password } = data;
 
                 axios
-                    .post("http://localhost:5000/register", data)
+                    .post("http://localhost:5000/signup", data)
                     .then((response) => {
                         console.log(response);
                     })
                     .catch((error) => {
                         console.log(error);
                     });
-                console.log(email, password, conf_password);
+                
+                
             },
         },
     };

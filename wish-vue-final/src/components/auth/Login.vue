@@ -16,7 +16,7 @@
             <button type="submit">Se connecter</button>
 
             <p>
-                Pas encore de compte ? <RouterLink to="/register">S'inscrire</RouterLink>
+                Pas encore de compte ? <RouterLink to="/signup">S'inscrire</RouterLink>
             </p>
         </form>
     </div>
