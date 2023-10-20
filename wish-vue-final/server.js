@@ -4,17 +4,19 @@ const cors = require('cors');
 const User = require('./models/User');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
+const env = require ('dotenv');
+env.config();
+
 
 const app = express();
-
-const uri = 'mongodb://0.0.0.0:27017/auth-users';
+const uri = `${process.env.SERVEUR_MONGO_DB}auth-users`;
 
 mongoose.connect(uri)
 .then(() => {
-    console.log("database connected")
+    console.log("database connected");
 })
 .catch(err => {
-    console.log("error connecting to database", err)
+    console.log("error connecting to database", err);
 });
 
 const port = process.env.PORT || 5000;
@@ -28,9 +30,10 @@ const saltRounds = 10; // Le nombre de tours pour le hachage
 
 app.post('/signup', async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+        const {email, password} = req.body;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
         const newUser = new User({
-            email: req.body.email,
+            email,
             password: hashedPassword,
         });
 

@@ -20,7 +20,7 @@
 
             <button type="submit">S'inscrire</button>
 
-            {{ errors  }}
+            {{ errors }}
 
             <p>
                 Déjà un compte ? <RouterLink to="/login">Se connecter</RouterLink>
@@ -51,8 +51,6 @@
                     conf_password: this.conf_password,
                 };
 
-                const { email, password, conf_password } = data;
-
                 axios
                     .post("http://localhost:5000/signup", data)
                     .then((response) => {
@@ -61,8 +59,6 @@
                     .catch((error) => {
                         console.log(error);
                     });
-                
-                
             },
         },
     };
