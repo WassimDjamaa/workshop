@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const User = require('./models/User');
+const users = require('./models/users');
+const products = require('./models/products');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const env = require ('dotenv');
@@ -9,7 +10,7 @@ env.config();
 
 
 const app = express();
-const uri = `${process.env.SERVEUR_MONGO_DB}auth-users`;
+const uri = `${process.env.SERVEUR_MONGO_DB}db_wish`;
 
 mongoose.connect(uri)
 .then(() => {
@@ -28,11 +29,23 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //routes
 const saltRounds = 10; // Le nombre de tours pour le hachage
 
+app.get('/products', async (req, res) => {
+    try {
+        const allProducts = await products.find();
+        return res.status(200).json(allProducts);
+    } catch (error) {
+        return res.status(500).json({
+            title: 'server error',
+            error: error.message
+        });
+    }
+});
+
 app.post('/signup', async (req, res) => {
     try {
         const {email, password} = req.body;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
-        const newUser = new User({
+        const newUser = new users({
             email,
             password: hashedPassword,
         });

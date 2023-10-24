@@ -51,10 +51,16 @@
                     conf_password: this.conf_password,
                 };
 
+                const {email, password, conf_password} = data;
+
                 axios
                     .post("http://localhost:5000/signup", data)
                     .then((response) => {
                         console.log(response);
+
+                        if(email != response.data.title){
+                            console.log('erreur')
+                        }
                     })
                     .catch((error) => {
                         console.log(error);

@@ -100,13 +100,13 @@
 </template>
   
 <script>
-import productData from '../../assets/data/products.json'
+import axios from 'axios';
 
 export default {
   name: 'Home',
   data() {
     return {
-      products: productData,
+      products: [],
       searchKey: '',
       liked: [],
       cart: []
@@ -185,6 +185,15 @@ export default {
 
   mounted() {
     this.getLikeCookie;
+
+    axios
+      .get('http://localhost:5000/products')
+      .then((response) => {
+        this.products = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 };
 </script>
