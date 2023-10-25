@@ -285,8 +285,13 @@ nav .nav-container #icons i:hover {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-left: 10px;
+  margin-left: 10%;
 }
+
+.item-description h4, p {
+  margin-left: 3%;
+}
+
 .home-container .shopping-cart .item-group .item .item-description h4 {
   margin: 0 0.9rem 0.9rem 0;
   background: rgba(51, 51, 51, 0.1);

@@ -1,33 +1,37 @@
+// module imports
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
+const env = require ('dotenv');
+const jwt = require('jsonwebtoken');
+
+// mongoose and models
+const mongoose = require('mongoose');
 const users = require('./models/users');
 const products = require('./models/products');
-const bcrypt = require('bcrypt');
-const mongoose = require('mongoose');
-const env = require ('dotenv');
+
 env.config();
 
-
+// server setup
 const app = express();
 const uri = `${process.env.SERVEUR_MONGO_DB}db_wish`;
+const port = process.env.PORT || 5000;
+const saltRounds = 10;
 
 mongoose.connect(uri)
 .then(() => {
     console.log("database connected");
 })
 .catch(err => {
-    console.log("error connecting to database", err);
+    console.err("error connecting to database", err);
 });
-
-const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //routes
-const saltRounds = 10; // Le nombre de tours pour le hachage
 
 app.get('/products', async (req, res) => {
     try {
@@ -48,12 +52,14 @@ app.post('/signup', async (req, res) => {
         const newUser = new users({
             email,
             password: hashedPassword,
+            conf_password: hashedPassword
         });
 
         await newUser.save();
 
         return res.status(200).json({
-            title: 'signup success'
+            title: 'signup success',
+            message: 'Votre compte a été créé'
         });
     } catch (error) {
         if (error.code === 11000) { // Code d'erreur pour violation d'index unique (email en cours d'utilisation)
@@ -71,35 +77,41 @@ app.post('/signup', async (req, res) => {
     }
 });
 
+
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
-
-    console.log(email, password);
-
+   
     try {
-        const user = await User.findOne({ email });
+        // Recherchez l'utilisateur par email
+        const user = await users.findOne({ email });
 
-        if (!user) {
+        if (!user.email) {
             return res.status(401).json({
-                title: 'user not found',
-                error: 'invalid credentials'
+                title: 'Utilisateur non trouvé',
+                error: 'Informations d\'identification non valides'
             });
         }
 
-        if (!bcrypt.compareSync(password, user.password)) {
+        // Vérifiez le mot de passe
+        if (password !== user.password) {
             return res.status(401).json({
-                title: 'login failed',
-                error: 'invalid credentials'
+                title: 'Mot de passe incorrect',
+                error: 'Informations d\'identification non valides'
             });
         }
+
+        // Générez un jeton JWT
+        const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
 
         return res.status(200).json({
-            title: 'login success'
+            title: 'Authentification réussie',
+            token: token,
         });
-    } catch (err) {
+    } catch (error) {
+        console.error(error);
         return res.status(500).json({
-            title: 'server error',
-            error: err
+            title: 'Erreur du serveur',
+            error: 'Une erreur s\'est produite lors de l\'authentification'
         });
     }
 });

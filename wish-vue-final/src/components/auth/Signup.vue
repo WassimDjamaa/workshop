@@ -4,17 +4,17 @@
         
         <form @submit.prevent="submit">
             <div>
-                <label for="email">Email</label>
+                <label for="email">Email : </label>
                 <input type="email" id="email" v-model="email" />
             </div>
 
             <div>
-                <label for="password">Mot de passe</label>
+                <label for="password">Mot de passe : </label>
                 <input type="password" id="password" v-model="password" />
             </div>
 
             <div>
-                <label for="password">Confirmer le mot de passe</label>
+                <label for="password">Confirmer le mot de passe : </label>
                 <input type="password" id="password" v-model="conf_password" />
             </div>
 
@@ -57,10 +57,6 @@
                     .post("http://localhost:5000/signup", data)
                     .then((response) => {
                         console.log(response);
-
-                        if(email != response.data.title){
-                            console.log('erreur')
-                        }
                     })
                     .catch((error) => {
                         console.log(error);

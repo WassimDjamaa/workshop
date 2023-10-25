@@ -4,12 +4,12 @@
         
         <form @submit.prevent="submit">
             <div>
-                <label for="email">Email</label>
+                <label for="email">Email : </label>
                 <input type="email" id="email" v-model="email" />
             </div>
 
             <div>
-                <label for="password">Mot de passe</label>
+                <label for="password">Mot de passe : </label>
                 <input type="password" id="password" v-model="password" />
             </div>
 
@@ -39,17 +39,19 @@
                     password: this.password,
                 };
 
-                const { email, password } = data;
-
                 axios
                     .post("http://localhost:5000/login", data)
                     .then((response) => {
-                        console.log(response);
+                        console.log(response.data);
+                        if (response.status === 200) {
+                            localStorage.setItem('token', response.data.token);
+                            localStorage.setItem('user', JSON.stringify(response.data.user));
+                            this.$router.push({ name: 'home' });
+                        }
                     })
                     .catch((error) => {
-                        console.log(error);
+                        console.error(error);
                     });
-                    console.log(email, password);
             },
         },
     };
