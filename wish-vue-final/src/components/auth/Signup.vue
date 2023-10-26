@@ -51,12 +51,12 @@
                     conf_password: this.conf_password,
                 };
 
-                const {email, password, conf_password} = data;
-
                 axios
                     .post("http://localhost:5000/signup", data)
                     .then((response) => {
-                        console.log(response);
+                        if (response.status === 200) {
+                            this.$router.push({ name: 'login' });
+                        }
                     })
                     .catch((error) => {
                         console.log(error);

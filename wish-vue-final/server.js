@@ -48,18 +48,26 @@ app.get('/products', async (req, res) => {
 app.post('/signup', async (req, res) => {
     try {
         const {email, password} = req.body;
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
         const newUser = new users({
             email,
-            password: hashedPassword,
-            conf_password: hashedPassword
+            password,
+            conf_password: password
         });
 
-        await newUser.save();
+       // check if password and conf_password are the same
+        if (newUser.password !== newUser.conf_password) {
+            return res.status(400).json({
+                title: 'error',
+                error: 'passwords do not match'
+            });
+        }
+
+        // save model to database
+        newUser.save();
 
         return res.status(200).json({
             title: 'signup success',
-            message: 'Votre compte a été créé'
+            message: 'Votre compte a été créé',
         });
     } catch (error) {
         if (error.code === 11000) { // Code d'erreur pour violation d'index unique (email en cours d'utilisation)
@@ -106,9 +114,9 @@ app.post('/login', async (req, res) => {
         return res.status(200).json({
             title: 'Authentification réussie',
             token: token,
+            userId: user._id
         });
     } catch (error) {
-        console.error(error);
         return res.status(500).json({
             title: 'Erreur du serveur',
             error: 'Une erreur s\'est produite lors de l\'authentification'
