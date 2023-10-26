@@ -29,7 +29,7 @@
             </li>
 
             <li>
-              <RouterLink to="/login">
+              <RouterLink @click="logout" to="/login">
                 <i class="fas fa-sign-in-alt"></i>
               </RouterLink>
             </li>
@@ -45,6 +45,11 @@
   import { RouterLink, RouterView } from 'vue-router'
   import './assets/style/style.css'
   import './assets/style/main.scss'
+ 
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  }
 </script>
 
 <style scoped>
