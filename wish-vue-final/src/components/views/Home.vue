@@ -51,7 +51,6 @@
 
           <transition-group name="item-anim" tag="div" class="item-group">
             <div v-for="product, id in cart" class="item" v-bind:key="product.id">
-
               <div class="img-container">
                 <img v-bind:src="`../src/assets/img/${product.img}`" />
               </div>

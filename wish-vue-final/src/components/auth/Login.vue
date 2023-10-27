@@ -66,7 +66,6 @@
                 axios
                     .post("http://localhost:5000/login", data)
                     .then((response) => {
-                        console.log(response.data);
                         if (response.status === 200) {
                             localStorage.setItem('token', response.data.token);
                             localStorage.setItem('user', JSON.stringify(response.data.userId));

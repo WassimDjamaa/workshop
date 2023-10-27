@@ -30,7 +30,7 @@
 
             <li>
               <RouterLink @click="logout" to="/login">
-                <i class="fas fa-sign-in-alt"></i>
+                <i class="fas fa-power-off"></i>
               </RouterLink>
             </li>
           </ul>

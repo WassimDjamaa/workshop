@@ -21,8 +21,8 @@
             <button type="submit">S'inscrire</button>
 
             <p class="login-link">
-            Déjà un compte ? <RouterLink to="/login">Se connecter</RouterLink>
-        </p>
+                Déjà un compte ? <RouterLink to="/login">Se connecter</RouterLink>
+            </p>
         </form>
         <p class="error-message">{{ errors }}</p>
     </div>
