@@ -37,7 +37,7 @@
                 email: "",
                 password: "",
                 conf_password: "",
-                errors: [],
+                errors: "",
             };
         },
         methods: {
@@ -46,15 +46,18 @@
                 // Réinitialisez les erreurs à chaque soumission.
                 this.errors = [];
 
-                // Vérifiez chaque champ et ajoutez des erreurs au tableau d'erreurs si nécessaire.
-                if (!this.email) {
-                    this.errors.push("Le champ Email est requis.");
-                }
-                if (!this.password) {
-                    this.errors.push("Le champ Mot de passe est requis.");
-                }
-                if (this.password !== this.conf_password) {
-                    this.errors.push("Les mots de passe ne correspondent pas.");
+                switch (true) {
+                    case !this.email:
+                        this.errors.push("Le champ Email est requis.");
+                        break;
+                    case !this.password:
+                        this.errors.push("Le champ Mot de passe est requis.");
+                        break;
+                    case this.password.length < 6:
+                        this.errors.push("Le mot de passe doit contenir au moins 6 caractères.");
+                        break;
+                    default:
+                        break;
                 }
 
                 // Si des erreurs sont présentes, n'envoyez pas la requête et affichez les erreurs.

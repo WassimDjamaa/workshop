@@ -21,17 +21,20 @@ const router = createRouter({
     { 
       path: '/user-settings',
       name: 'userSettings',
-      component: userSettings
+      component: userSettings,
+      meta: { requiresAuth: true }
     },
     { 
       path: '/wish-list', 
       name: 'wishList',
-      component: wishList
+      component: wishList,
+      meta: { requiresAuth: true }
     },
     { 
       path: '/shopping-cart', 
       name: 'shoppingCart',
-      component: shoppingCart
+      component: shoppingCart,
+      meta: { requiresAuth: true }
     },
     { 
       path: '/login', 
