@@ -1,33 +1,31 @@
 <template>
-    <div>
-        <h1>Inscription</h1>
-        
-        <form @submit.prevent="submit">
+    <div class="signup-container">
+        <h1 class="signup-title">Inscription</h1>
+
+        <form class="signup-form" @submit.prevent="submit">
             <div>
-                <label for="email">Email : </label>
+                <label for="email">Email :</label>
                 <input type="email" id="email" v-model="email" />
             </div>
 
             <div>
-                <label for="password">Mot de passe : </label>
+                <label for="password">Mot de passe :</label>
                 <input type="password" id="password" v-model="password" />
             </div>
 
             <div>
-                <label for="password">Confirmer le mot de passe : </label>
-                <input type="password" id="password" v-model="conf_password" />
+                <label for="conf_password">Confirmer le mot de passe :</label>
+                <input type="password" id="conf_password" v-model="conf_password" />
             </div>
 
             <button type="submit">S'inscrire</button>
 
-            {{ errors }}
-
-            <p>
-                Déjà un compte ? <RouterLink to="/login">Se connecter</RouterLink>
-            </p>
+            <p class="login-link">
+            Déjà un compte ? <RouterLink to="/login">Se connecter</RouterLink>
+        </p>
         </form>
+        <p class="error-message">{{ errors }}</p>
     </div>
-        
 </template>
 
 <script>
@@ -39,12 +37,31 @@
                 email: "",
                 password: "",
                 conf_password: "",
-
-                errors: '',
+                errors: [],
             };
         },
         methods: {
             submit() {
+
+                // Réinitialisez les erreurs à chaque soumission.
+                this.errors = [];
+
+                // Vérifiez chaque champ et ajoutez des erreurs au tableau d'erreurs si nécessaire.
+                if (!this.email) {
+                    this.errors.push("Le champ Email est requis.");
+                }
+                if (!this.password) {
+                    this.errors.push("Le champ Mot de passe est requis.");
+                }
+                if (this.password !== this.conf_password) {
+                    this.errors.push("Les mots de passe ne correspondent pas.");
+                }
+
+                // Si des erreurs sont présentes, n'envoyez pas la requête et affichez les erreurs.
+                if (this.errors.length > 0) {
+                    return;
+                }
+
                 let data = {
                     email: this.email,
                     password: this.password,
@@ -52,17 +69,16 @@
                 };
 
                 axios
-                    .post("http://localhost:5000/signup", data)
-                    .then((response) => {
-                        if (response.status === 200) {
-                            this.$router.push({ name: 'login' });
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
+                .post("http://localhost:5000/signup", data)
+                .then((response) => {
+                    if (response.status === 200) {
+                        this.$router.push({ name: 'login' });
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+                },
             },
-        },
-    };
-
+        };
 </script>

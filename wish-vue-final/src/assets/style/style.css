@@ -285,11 +285,10 @@ nav .nav-container #icons i:hover {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-left: 10%;
 }
 
 .item-description h4, p {
-  margin-left: 3%;
+  margin-left: 4%;
 }
 
 .home-container .shopping-cart .item-group .item .item-description h4 {
@@ -421,6 +420,121 @@ nav .nav-container #icons i:hover {
   transform: translateY(100px);
   transition: 0.7s;
 }
+
+/* Conteneur de la page de connexion */
+.login-container {
+  max-width: 400px; 
+  margin: 0 auto;
+  padding: 3rem;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre de la page de connexion */
+.login-title {
+  font-size: 24px;
+  margin-left: 3.5rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Style du formulaire de connexion */
+.login-form {
+  text-align: center;
+}
+
+/* Style des champs de saisie */
+.login-form input {
+  width: 100%;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Style du bouton de connexion */
+.login-form button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 1rem;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 1rem;
+}
+
+/* Style du pied de page ou d'autres informations supplémentaires */
+.login-footer {
+  margin-top: 1.5rem;
+  font-size: 14px;
+  text-align: center;
+  color: #888;
+}
+
+
+/* signup page */
+
+/* Conteneur de la page d'inscription */
+.signup-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 3rem;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre de la page d'inscription */
+.signup-title {
+  margin-left: 3.5rem;
+  font-size: 24px;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Style du formulaire d'inscription */
+.signup-form {
+  text-align: center;
+}
+
+/* Style des champs de saisie */
+.signup-form input {
+  width: 100%;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Style du bouton d'inscription */
+.signup-form button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 1rem;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 1rem;
+}
+
+/* Style du lien "Déjà un compte ?" */
+.login-link {
+  margin-top: 0.5rem;
+  margin-left: 2rem;
+}
+
+/* Style des messages d'erreur */
+.error-message {
+  color: #f00;
+  text-align: center;
+  margin-top: 1rem;
+}
+
 
 @keyframes scaler {
   50% {
