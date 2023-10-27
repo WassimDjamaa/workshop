@@ -53,7 +53,6 @@
                         break;
                 }
 
-                // Si des erreurs sont présentes, n'envoyez pas la requête et affichez les erreurs.
                 if (this.errors.length > 0) {
                     return;
                 }

@@ -17,7 +17,6 @@ env.config();
 const app = express();
 const uri = `${process.env.SERVEUR_MONGO_DB}db_wish`;
 const port = process.env.PORT || 5000;
-const saltRounds = 10;
 
 mongoose.connect(uri)
 .then(() => {
