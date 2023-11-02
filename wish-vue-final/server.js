@@ -1,129 +1,114 @@
-// module imports
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt');
-const env = require ('dotenv');
-const jwt = require('jsonwebtoken');
-
-// mongoose and models
+const fastify = require('fastify')({ logger: { level: 'error'} });
 const mongoose = require('mongoose');
 const users = require('./models/users');
 const products = require('./models/products');
+const bcrypt = require('bcrypt');
+const env = require('dotenv');
+const jwt = require('jsonwebtoken');
 
 env.config();
 
-// server setup
-const app = express();
 const uri = `${process.env.SERVEUR_MONGO_DB}db_wish`;
 const port = process.env.PORT || 5000;
 
-mongoose.connect(uri)
-.then(() => {
-    console.log("database connected");
-})
-.catch(err => {
-    console.err("error connecting to database", err);
-});
+fastify.register(require('@fastify/cors'));
 
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+fastify.register(require('@fastify/formbody'));
 
-//routes
-
-app.get('/products', async (req, res) => {
+fastify.get('/products', async (request, reply) => {
     try {
         const allProducts = await products.find();
-        return res.status(200).json(allProducts);
+        reply.code(200).send(allProducts);
     } catch (error) {
-        return res.status(500).json({
+        reply.code(500).send({
             title: 'server error',
-            error: error.message
+            error: error.message,
         });
     }
 });
 
-app.post('/signup', async (req, res) => {
+fastify.post('/signup', async (request, reply) => {
     try {
-        const {email, password} = req.body;
+        const { email, password } = request.body;
         const newUser = new users({
             email,
             password,
-            conf_password: password
+            conf_password: password,
         });
 
-       // check if password and conf_password are the same
+        // check if password and conf_password are the same
         if (newUser.password !== newUser.conf_password) {
-            return res.status(400).json({
+            reply.code(400).send({
                 title: 'error',
-                error: 'passwords do not match'
+                error: 'passwords do not match',
             });
+            return;
         }
 
         // save model to database
         newUser.save();
 
-        return res.status(200).json({
+        reply.code(200).send({
             title: 'signup success',
             message: 'Votre compte a été créé',
         });
     } catch (error) {
-        if (error.code === 11000) { // Code d'erreur pour violation d'index unique (email en cours d'utilisation)
-            return res.status(400).json({
+        if (error.code === 11000) {
+            reply.code(400).send({
                 title: 'error',
-                error: 'email in use'
+                error: 'email in use',
             });
         } else {
-            // Gérez d'autres erreurs ici
-            return res.status(500).json({
+            reply.code(500).send({
                 title: 'server error',
-                error: error.message
+                error: error.message,
             });
         }
     }
 });
 
+fastify.post('/login', async (request, reply) => {
+    const { email, password } = request.body;
 
-app.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-   
     try {
-        // Recherchez l'utilisateur par email
         const user = await users.findOne({ email });
 
-        if (!user.email) {
-            return res.status(401).json({
+        if (!user || password !== user.password) {
+            reply.code(401).send({
                 title: 'Utilisateur non trouvé',
-                error: 'Informations d\'identification non valides'
+                error: 'Informations d\'identification non valides',
             });
+            return;
         }
 
-        // Vérifiez le mot de passe
-        if (password !== user.password) {
-            return res.status(401).json({
-                title: 'Mot de passe incorrect',
-                error: 'Informations d\'identification non valides'
-            });
-        }
-
-        // Générez un jeton JWT
         const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
 
-        return res.status(200).json({
+        reply.code(200).send({
             title: 'Authentification réussie',
             token: token,
-            userId: user._id
+            userId: user._id,
         });
     } catch (error) {
-        return res.status(500).json({
+        reply.code(500).send({
             title: 'Erreur du serveur',
-            error: 'Une erreur s\'est produite lors de l\'authentification'
+            error: 'Une erreur s\'est produite lors de l\'authentification',
         });
     }
 });
 
-app.listen(port, (err) => {
-    if (err) console.log(err);
-    console.log(`Server running on port ${port}`)
-});
+const start = async () => {
+    try {
+        await mongoose.connect(uri);
+        fastify.listen({ port: port }, (err) => {
+            if (err) {
+              fastify.log.error(err);
+              process.exit(1);
+            }
+          });    
+    } catch (err) {
+        fastify.log.error(err);
+        process.exit(1);
+    }
+};
+
+start();
