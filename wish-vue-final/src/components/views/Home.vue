@@ -50,9 +50,9 @@
           <h2>Panier</h2>
 
           <transition-group name="item-anim" tag="div" class="item-group">
-            <div v-for="product, id in cart" class="item" v-bind:key="product.id">
+            <div v-for="product in cart" :key="product.id" class="item">
               <div class="img-container">
-                <img v-bind:src="`../src/assets/img/${product.img}`" />
+                <img :src="`../src/assets/img/${product.img}`" />
               </div>
 
               <div class="item-description">
@@ -108,34 +108,37 @@ export default {
       products: [],
       searchKey: '',
       liked: [],
-      cart: []
+      cart: [],
     };
   },
-
   computed: {
     filteredList() {
       return this.products.filter((product) => {
         return product.description.toLowerCase().includes(this.searchKey.toLowerCase());
       });
     },
-
-    getLikeCookie() {
-      let cookieValue = JSON.parse(this.$cookies.get('like'));
-      cookieValue == null ? this.liked = [] : this.liked = cookieValue
+    likeCookie() {
+      return JSON.parse(this.$cookies.get('like')) || [];
     },
   },
-
   methods: {
+    async getProducts() {
+      try {
+        const response = await axios.get('http://localhost:5000/products');
+        this.products = response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
     setLikeCookie() {
       document.addEventListener('input', () => {
         setTimeout(() => {
           this.$cookies.set('like', JSON.stringify(this.liked));
         }, 300);
-      })
+      });
     },
-
     addToCart(product) {
-      // check if already in array
+      // Check if already in the cart
       const { id, img, description, price } = product;
 
       for (const elementProduct of this.cart) {
@@ -149,51 +152,41 @@ export default {
         img,
         description,
         price,
-        quantity: 1
-      })
+        quantity: 1,
+      });
     },
-
     cartPlusOn(product) {
-      product.quantity += 1
+      product.quantity += 1;
     },
-
     cartMinusOn(product, id) {
-      (product.quantity == 1 ? this.deleteCartById(id) : product.quantity -= 1)
+      if (product.quantity === 1) {
+        this.deleteCartById(id);
+      } else {
+        product.quantity -= 1;
+      }
     },
-
     deleteCartById(id) {
       this.cart = this.cart.filter((product) => product.id !== id);
     },
-
     cartTotalAmount() {
       let total = 0;
       for (const item of this.cart) {
-        total = total + (item.quantity * item.price);
+        total += item.quantity * item.price;
       }
       return total;
     },
-
     cartTotalQuantity() {
       let total = 0;
       for (const item of this.cart) {
-        total = total + item.quantity;
+        total += item.quantity;
       }
       return total;
     },
   },
-
-  mounted() {
-    this.getLikeCookie;
-
-    axios
-      .get('http://localhost:5000/products')
-      .then((response) => {
-        this.products = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  created() {
+    this.liked = this.likeCookie;
+    this.getProducts();
+  },
 };
 </script>
   

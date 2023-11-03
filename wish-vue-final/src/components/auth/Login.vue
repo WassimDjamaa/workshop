@@ -37,17 +37,12 @@
         methods: {
             submit() {
 
-                this.errors = [];
-
                 switch (true) {
                     case !this.email:
-                        this.errors.push("Le champ Email est requis.");
+                        this.errors = "Le champ Email est requis.";
                         break;
                     case !this.password:
-                        this.errors.push("Le champ Mot de passe est requis.");
-                        break;
-                    case this.password.length < 6:
-                        this.errors.push("Le mot de passe doit contenir au moins 6 caractères.");
+                        this.errors = "Le mot de passe est incorrect.";
                         break;
                     default:
                         break;
