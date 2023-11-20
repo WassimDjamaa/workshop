@@ -1,0 +1,58 @@
+[{
+  "_id": {
+    "$oid": "6537cc899a2bcc01c6f14e91"
+  },
+  "email": "utilisateur1@example.com",
+  "password": "toto",
+  "conf_password": "motdepasse1"
+},
+{
+  "_id": {
+    "$oid": "6537cc899a2bcc01c6f14e92"
+  },
+  "email": "utilisateur2@example.com",
+  "password": "motdepasse2",
+  "conf_password": "motdepasse2"
+},
+{
+  "_id": {
+    "$oid": "6537cc899a2bcc01c6f14e93"
+  },
+  "email": "utilisateur3@example.com",
+  "password": "motdepasse3",
+  "conf_password": "motdepasse3"
+},
+{
+  "_id": {
+    "$oid": "6537cc899a2bcc01c6f14e94"
+  },
+  "email": "utilisateur4@example.com",
+  "password": "motdepasse4",
+  "conf_password": "motdepasse4"
+},
+{
+  "_id": {
+    "$oid": "6537cc899a2bcc01c6f14e95"
+  },
+  "email": "utilisateur5@example.com",
+  "password": "motdepasse5",
+  "conf_password": "motdepasse5"
+},
+{
+  "_id": {
+    "$oid": "653a60ce57803f258b64ef1a"
+  },
+  "email": "toto@tot",
+  "password": "toto",
+  "conf_password": "toto",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "653bbf8a7b7d6267f8100cf9"
+  },
+  "email": "wassim.djamaa@sfr.fr",
+  "password": "azerty",
+  "conf_password": "azerty",
+  "__v": 0
+}]
