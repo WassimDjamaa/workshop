@@ -15,11 +15,9 @@ env.config();
 const uri = `${process.env.SERVEUR_MONGO_DB}db_wish`;
 const port = process.env.PORT || 5000;
 
-const { register } = fastify;
+fastify.register(fastifyCors);
+fastify.register(fastifyFormbody);
 
-register(fastifyCors);
-
-register(fastifyFormbody);
 
 fastify.get('/products', async (req, res) => {
     try {
